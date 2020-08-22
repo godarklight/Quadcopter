@@ -1,0 +1,17 @@
+ModCFG
+{
+    title = Quadcopter
+    author = godarklight
+    modVersion = 0.1.0
+    Plugin
+    {
+        name = Quadcopter
+        description = Quadcopter mod
+        asmpath = Addons/Quadcopter/Quadcopter.dll
+        order = 100
+    }
+    Parts
+    {
+        part = Addons/Quadcopter/Quadmotor.cfg
+    }
+} 
