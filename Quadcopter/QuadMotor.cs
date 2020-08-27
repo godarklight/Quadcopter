@@ -3,19 +3,19 @@ using Modules;
 
 namespace Quadcopter
 {
-    public class QuadcopterMotor
+    public class QuadMotor
     {
         public Part part;
-        public QuadcopterEngine engine;
+        public QuadEngine engine;
 
-        public QuadcopterMotor(Part p)
+        public QuadMotor(Part p)
         {
             this.part = p;
-            foreach (QuadcopterEngine pm in p.Modules)
+            foreach (QuadEngine pm in p.Modules)
             {
-                if (pm is QuadcopterEngine)
+                if (pm is QuadEngine)
                 {
-                    engine = (QuadcopterEngine)pm;
+                    engine = (QuadEngine)pm;
                 }
             }
         }

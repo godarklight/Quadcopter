@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Quadcopter
 {
-    public static class QuadcopterLog
+    public static class QuadLog
     {
         public static void Debug(string text)
         {

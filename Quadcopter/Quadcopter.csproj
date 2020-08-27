@@ -511,11 +511,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Loader.cs" />
-    <Compile Include="QuadcopterMain.cs" />
-    <Compile Include="QuadcopterLog.cs" />
-    <Compile Include="QuadcopterModule.cs" />
-    <Compile Include="QuadcopterMotor.cs" />
-    <Compile Include="QuadcopterEngine.cs" />
+    <Compile Include="QuadMain.cs" />
+    <Compile Include="QuadLog.cs" />
+    <Compile Include="QuadModule.cs" />
+    <Compile Include="QuadMotor.cs" />
+    <Compile Include="QuadEngine.cs" />
+    <Compile Include="QuadPID.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Quadcopter.modcfg">

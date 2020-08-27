@@ -7,7 +7,7 @@ using GameEventsData;
 
 namespace Quadcopter
 {
-    public class QuadcopterMain : MonoBehaviour
+    public class QuadMain : MonoBehaviour
     {
         public void Start()
         {
@@ -22,23 +22,23 @@ namespace Quadcopter
             string t2String = "Modules.Engine, Assembly-CSharp";
             Type t1 = Type.GetType(t1String);
             Type t2 = Type.GetType(t2String);
-            QuadcopterLog.Debug($"{t1String} OK? {(t1 != null).ToString()}");
-            QuadcopterLog.Debug($"{t1String} OK? {(t2 != null).ToString()}");
+            QuadLog.Debug($"{t1String} OK? {(t1 != null).ToString()}");
+            QuadLog.Debug($"{t1String} OK? {(t2 != null).ToString()}");
         }
 
         private void AttachModuleToSelf(Vehicle v)
         {
-            QuadcopterLog.Debug($"{v.name} spawned");
+            QuadLog.Debug($"{v.name} spawned");
             if (v.IsLocalPlayerVehicle && !v.IsEditing)
             {
-                QuadcopterLog.Debug($"{v.name} is our vechile, checking motor setup");
+                QuadLog.Debug($"{v.name} is our vechile, checking motor setup");
                 List<Part> motorParts = new List<Part>();
                 foreach (Part p in v.parts)
                 {
                     bool partIsMotor = false;
                     foreach (PartModule pm in p.Modules)
                     {
-                        if (pm is QuadcopterEngine)
+                        if (pm is QuadEngine)
                         {
                             partIsMotor = true;
                             break;
@@ -51,28 +51,28 @@ namespace Quadcopter
                 }
                 if (motorParts.Count == 4)
                 {
-                    QuadcopterModule qm = CheckMotorSetup(motorParts, v);
+                    QuadModule qm = CheckMotorSetup(motorParts, v);
                     if (qm != null)
                     {
                         ScreenMessages.PostScreenMessage("Quadcopter OK!");
-                        QuadcopterLog.Debug($"Quadcopter OK!");
+                        QuadLog.Debug($"Quadcopter OK!");
                     }
                     else
                     {
-                        QuadcopterLog.Debug($"Vechile has 4 motors but an incorrect configuration");
+                        QuadLog.Debug($"Vechile has 4 motors but an incorrect configuration");
                     }
                 }
                 else
                 {
-                    QuadcopterLog.Debug($"Vessel does not have 4 motors");
+                    QuadLog.Debug($"Vessel does not have 4 motors");
                 }
             }
         }
 
-        private QuadcopterModule CheckMotorSetup(List<Part> motorParts, Vehicle v)
+        private QuadModule CheckMotorSetup(List<Part> motorParts, Vehicle v)
         {
             Vector3d CoM = FindVehicleCoM(v);
-            QuadcopterLog.Debug($"Vehicle CoM is: {CoM}");
+            QuadLog.Debug($"Vehicle CoM is: {CoM}");
             Part motorFL = null;
             Part motorFR = null;
             Part motorRL = null;
@@ -81,11 +81,11 @@ namespace Quadcopter
             {
                 if (p.physics == null)
                 {
-                    QuadcopterLog.Debug("Motor is physicless, not valid.");
+                    QuadLog.Debug("Motor is physicless, not valid.");
                     return null;
                 }
                 Vector3 partCoM = p.p0;
-                QuadcopterLog.Debug($"Part CoM is: {partCoM}");
+                QuadLog.Debug($"Part CoM is: {partCoM}");
                 bool negativeX = false;
                 bool negativeZ = false;
                 if (partCoM.x < CoM.x)
@@ -105,7 +105,7 @@ namespace Quadcopter
                     }
                     else
                     {
-                        QuadcopterLog.Debug("Front left motor already assigned, not valid.");
+                        QuadLog.Debug("Front left motor already assigned, not valid.");
                         return null;
                     }
                 }
@@ -118,7 +118,7 @@ namespace Quadcopter
                     }
                     else
                     {
-                        QuadcopterLog.Debug("Front right motor already assigned, not valid.");
+                        QuadLog.Debug("Front right motor already assigned, not valid.");
                         return null;
                     }
                 }
@@ -131,7 +131,7 @@ namespace Quadcopter
                     }
                     else
                     {
-                        QuadcopterLog.Debug("Rear left motor already assigned, not valid.");
+                        QuadLog.Debug("Rear left motor already assigned, not valid.");
                         return null;
                     }
                 }
@@ -144,13 +144,13 @@ namespace Quadcopter
                     }
                     else
                     {
-                        QuadcopterLog.Debug("Rear right motor already assigned, not valid.");
+                        QuadLog.Debug("Rear right motor already assigned, not valid.");
                         return null;
                     }
                 }
             }
             GameObject go = new GameObject();
-            QuadcopterModule qm = go.AddComponent<QuadcopterModule>();
+            QuadModule qm = go.AddComponent<QuadModule>();
             DontDestroyOnLoad(qm);
             qm.Setup(v, motorFL, motorFR, motorRL, motorRR);
             return qm;

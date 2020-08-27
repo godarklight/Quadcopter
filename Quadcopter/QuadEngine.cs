@@ -2,7 +2,7 @@
 using Modules;
 namespace Quadcopter
 {
-    public class QuadcopterEngine : Engine
+    public class QuadEngine : Engine
     {
         public bool modOverride = false;
         public new void OnReceiveCtrlState(FSInputState data)

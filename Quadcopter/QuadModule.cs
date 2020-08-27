@@ -3,11 +3,11 @@ using UnityEngine;
 
 namespace Quadcopter
 {
-    public class QuadcopterModule : MonoBehaviour
+    public class QuadModule : MonoBehaviour
     {
         //Standard configuration
         private Vehicle vehicle;
-        private QuadcopterMotor[] motors = new QuadcopterMotor[4];
+        private QuadMotor[] motors = new QuadMotor[4];
 
         public void Setup(Vehicle vehicle, Part motorFL, Part motorFR, Part motorRL, Part motorRR)
         {
@@ -16,10 +16,10 @@ namespace Quadcopter
             {
                 this.vehicle.Autotrim.DisableAT();
             }
-            motors[0] = new QuadcopterMotor(motorFL);
-            motors[1] = new QuadcopterMotor(motorFR);
-            motors[2] = new QuadcopterMotor(motorRL);
-            motors[3] = new QuadcopterMotor(motorRR);
+            motors[0] = new QuadMotor(motorFL);
+            motors[1] = new QuadMotor(motorFR);
+            motors[2] = new QuadMotor(motorRL);
+            motors[3] = new QuadMotor(motorRR);
         }
 
         public void FixedUpdate()

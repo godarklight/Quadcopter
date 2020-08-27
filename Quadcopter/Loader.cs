@@ -18,8 +18,8 @@ namespace Quadcopter
             if (go == null)
             {
                 go = new GameObject();
-                mod = go.AddComponent<QuadcopterMain>();
-                QuadcopterLog.Debug("Initialized!");
+                mod = go.AddComponent<QuadMain>();
+                QuadLog.Debug("Initialized!");
             }
         }
 
