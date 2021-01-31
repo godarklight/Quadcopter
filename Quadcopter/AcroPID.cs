@@ -18,9 +18,9 @@ namespace Quadcopter
             this.rollRate = rollRate;
             this.vehicle = vehicle;
             //FSControlUtil.Get* is radians
-            pidPitch = new QuadPID(1, 0, .1, -1, 1, () => { return FSControlUtil.GetVehiclePitch(vehicle); }, () => { return 0d; }, () => { return Time.fixedTime; }, null);
-            pidRoll = new QuadPID(1, 0, .1, -1, 1, () => { return FSControlUtil.GetVehicleRoll(vehicle); }, () => { return 0d; }, () => { return Time.fixedTime; }, null);
-            pidYaw = new QuadPID(1, 0, .1, -1, 1, () => { return FSControlUtil.GetVehicleYaw(vehicle); }, () => { return 0d; }, () => { return Time.fixedTime; }, null);
+            pidPitch = new QuadPID(1, 0.1, .5, -1, 1, () => { return FSControlUtil.GetVehiclePitch(vehicle); }, () => { return 0d; }, () => { return Time.fixedTime; }, null);
+            pidRoll = new QuadPID(1, 0.1, .5, -1, 1, () => { return FSControlUtil.GetVehicleRoll(vehicle); }, () => { return 0d; }, () => { return Time.fixedTime; }, null);
+            pidYaw = new QuadPID(1, 0, 0, -1, 1, () => { return FSControlUtil.GetVehicleYaw(vehicle); }, () => { return Math.PI; }, () => { return Time.fixedTime; }, null);
         }
 
         public void FixedUpdate(Quaternion targetRotation)
@@ -36,9 +36,9 @@ namespace Quadcopter
             QuadMotor motorFR = motors[1];
             QuadMotor motorRL = motors[2];
             QuadMotor motorRR = motors[3];
-            float pitchOffset = 0.5f * (float)pidPitch.outputValue;
-            float rollOffset = 0.5f * (float)pidRoll.outputValue;
-            float yawOffset = 0f * (float)pidYaw.outputValue;
+            float pitchOffset = 0.2f * (float)pidPitch.outputValue;
+            float rollOffset = 0.2f * (float)pidRoll.outputValue;
+            float yawOffset = 0.1f * (float)pidYaw.outputValue;
             float targetFL = throttle * (1f + pitchOffset + rollOffset - yawOffset);
             float targetFR = throttle * (1f + pitchOffset - rollOffset + yawOffset);
             float targetRL = throttle * (1f - pitchOffset + rollOffset + yawOffset);
@@ -79,7 +79,8 @@ namespace Quadcopter
             targetFR = Mathf.Clamp01(targetFR);
             targetRL = Mathf.Clamp01(targetRL);
             targetRR = Mathf.Clamp01(targetRR);         
-            DebugScreen.SetValues(targetFL, targetFR, targetRL, targetRR);
+            DebugScreen.SetThrottles(targetFL, targetFR, targetRL, targetRR);
+            DebugScreen.SetPower(motorFL.ShaftPower, motorFR.ShaftPower, motorRL.ShaftPower, motorRR.ShaftPower);
             motorFL.SetThrottle(targetFL);
             motorFR.SetThrottle(targetFR);
             motorRL.SetThrottle(targetRL);

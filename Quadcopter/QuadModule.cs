@@ -23,7 +23,7 @@ namespace Quadcopter
             motors[2] = new QuadMotor(motorRL);
             motors[3] = new QuadMotor(motorRR);
             acroPID = new AcroPID(50, vehicle);
-            targetRot = vehicle.Rb.rotation;
+            targetRot = Quaternion.identity;
         }
 
         public void FixedUpdate()
@@ -46,7 +46,6 @@ namespace Quadcopter
                 ScreenMessages.PostScreenMessage("Cannot use autotrim with quadcopters");
                 vehicle.Autotrim.DisableAT();
             }
-            QuadLog.Debug("Updating ACRO");
             acroPID.FixedUpdate(targetRot);
             acroPID.SetMotors(motors, InputSettings.Axis_Throttle.GetAxis());
         }

@@ -12,14 +12,26 @@ namespace Quadcopter
         private static float FR;
         private static float RL;
         private static float RR;
+        private static double FLpower;
+        private static double FRpower;
+        private static double RLpower;
+        private static double RRpower;
         private static bool textureOK = true;
 
-        public static void SetValues(float FL, float FR, float RL, float RR)
+        public static void SetThrottles(float FL, float FR, float RL, float RR)
         {
             DebugScreen.FL = FL * 100;
             DebugScreen.FR = FR * 100;
             DebugScreen.RL = RL * 100;
             DebugScreen.RR = RR * 100;
+            textureOK = false;
+        }
+        public static void SetPower(double FL, double FR, double RL, double RR)
+        {
+            DebugScreen.FLpower = FL / 320f;
+            DebugScreen.FRpower = FR / 320f;
+            DebugScreen.RLpower = RL / 320f;
+            DebugScreen.RRpower = RR / 320f;
             textureOK = false;
         }
 
@@ -110,6 +122,18 @@ namespace Quadcopter
                         drawTexture.SetPixel(x, y, Color.black);
                     }
                 }
+            }
+            //Power
+            for (int x = 0; x < 20; x++)
+            {
+                //FL
+                drawTexture.SetPixel(x, 105 + (int)(FLpower * 100), Color.red);
+                //FR
+                drawTexture.SetPixel(x + 25, 105 + (int)(FRpower * 100), Color.red);
+                //RL
+                drawTexture.SetPixel(x, (int)(RLpower * 100), Color.red);
+                //RR
+                drawTexture.SetPixel(x + 25, (int)(RRpower * 100), Color.red);
             }
             drawTexture.Apply();
         }

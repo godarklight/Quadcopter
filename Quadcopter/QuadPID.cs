@@ -80,7 +80,7 @@ namespace Quadcopter
             double currentInput = input();
             double currentSetpoint = setpoint();
             error = currentSetpoint - currentInput;
-            double deltaInput = currentInput - lastInput;
+            double deltaInput = lastInput - currentInput;
             double deltaTime = currentTime - lastTime;
             //Return if we get called twice on the same frame
             if ((currentTime - lastTime) < double.Epsilon)

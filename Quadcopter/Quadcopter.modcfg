@@ -13,5 +13,6 @@ ModCFG
     Parts
     {
         part = Addons/Quadcopter/Quadmotor.cfg
+        part = Addons/Quadcopter/Quadprop.cfg
     }
 } 
