@@ -9,6 +9,7 @@ namespace Quadcopter
     {
         private static GameObject go;
         private static MonoBehaviour mod;
+        private static DebugScreen debugScreen;
 
         //Game start
         [BalsaAddonInit]
@@ -19,7 +20,8 @@ namespace Quadcopter
             {
                 go = new GameObject();
                 mod = go.AddComponent<QuadMain>();
-                QuadLog.Debug("Initialized!");
+                debugScreen = go.AddComponent<DebugScreen>();
+                QuadLog.Debug($"Initialized {typeof(QuadMain).FullName}!");
             }
         }
 

@@ -66,6 +66,7 @@ namespace Quadcopter
             this.clockSource = clockSource;
             this.setpoint = setpoint;
             this.output = output;
+            this.enabled = true;
         }
 
         public void FixedUpdate()
@@ -78,7 +79,7 @@ namespace Quadcopter
             double currentTime = clockSource();
             double currentInput = input();
             double currentSetpoint = setpoint();
-            error = currentInput - currentSetpoint;
+            error = currentSetpoint - currentInput;
             double deltaInput = currentInput - lastInput;
             double deltaTime = currentTime - lastTime;
             //Return if we get called twice on the same frame
@@ -88,7 +89,7 @@ namespace Quadcopter
             }
             //PID calculation
             p = error * kP;
-            i += error * kI;
+            i += error * kI * deltaTime;
             d = (deltaInput * kD) / deltaTime;
             //Clamp I
             if (i < rangeMin)

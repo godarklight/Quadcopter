@@ -8,6 +8,8 @@ namespace Quadcopter
         //Standard configuration
         private Vehicle vehicle;
         private QuadMotor[] motors = new QuadMotor[4];
+        private AcroPID acroPID;
+        private Quaternion targetRot;
 
         public void Setup(Vehicle vehicle, Part motorFL, Part motorFR, Part motorRL, Part motorRR)
         {
@@ -20,30 +22,33 @@ namespace Quadcopter
             motors[1] = new QuadMotor(motorFR);
             motors[2] = new QuadMotor(motorRL);
             motors[3] = new QuadMotor(motorRR);
+            acroPID = new AcroPID(50, vehicle);
+            targetRot = vehicle.Rb.rotation;
         }
 
         public void FixedUpdate()
         {
             if (vehicle == null)
             {
+                QuadLog.Debug("Fixed update: Vessel is null");
                 Destroy(this);
                 return;
             }
             if (!vehicle.isActiveAndEnabled)
             {
+                QuadLog.Debug("Fixed update: Vessel is not active and enabled");
                 Destroy(this);
                 return;
             }
             if (vehicle.Autotrim.autoTrimEnabled)
             {
+                QuadLog.Debug("Fixed update: Cannot use autotrim with quadcopters");
                 ScreenMessages.PostScreenMessage("Cannot use autotrim with quadcopters");
                 vehicle.Autotrim.DisableAT();
             }
-            //Testing
-            motors[0].SetThrottle(0.25f);
-            motors[1].SetThrottle(0.5f);
-            motors[2].SetThrottle(0.75f);
-            motors[3].SetThrottle(1f);
+            QuadLog.Debug("Updating ACRO");
+            acroPID.FixedUpdate(targetRot);
+            acroPID.SetMotors(motors, InputSettings.Axis_Throttle.GetAxis());
         }
     }
 }

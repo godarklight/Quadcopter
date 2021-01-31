@@ -517,6 +517,8 @@
     <Compile Include="QuadMotor.cs" />
     <Compile Include="QuadEngine.cs" />
     <Compile Include="QuadPID.cs" />
+    <Compile Include="AcroPID.cs" />
+    <Compile Include="DebugScreen.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Quadcopter.modcfg">

@@ -12,18 +12,7 @@ namespace Quadcopter
         public void Start()
         {
             DontDestroyOnLoad(this);
-            GameEvents.Game.OnSceneTransitionComplete.AddListener(PowerOnSelfTest);
             GameEvents.Vehicles.OnVehicleSpawned.AddListener(AttachModuleToSelf);
-        }
-
-        private void PowerOnSelfTest(FromToAction<GameScenes> scene)
-        {
-            string t1String = "Modules.Engine";
-            string t2String = "Modules.Engine, Assembly-CSharp";
-            Type t1 = Type.GetType(t1String);
-            Type t2 = Type.GetType(t2String);
-            QuadLog.Debug($"{t1String} OK? {(t1 != null).ToString()}");
-            QuadLog.Debug($"{t1String} OK? {(t2 != null).ToString()}");
         }
 
         private void AttachModuleToSelf(Vehicle v)

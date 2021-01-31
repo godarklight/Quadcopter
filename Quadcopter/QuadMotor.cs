@@ -1,5 +1,7 @@
 ﻿using System;
+using DirectLineRendering;
 using Modules;
+using UnityEngine;
 
 namespace Quadcopter
 {
@@ -11,11 +13,13 @@ namespace Quadcopter
         public QuadMotor(Part p)
         {
             this.part = p;
-            foreach (QuadEngine pm in p.Modules)
+            foreach (PartModule pm in p.Modules)
             {
                 if (pm is QuadEngine)
                 {
                     engine = (QuadEngine)pm;
+                    engine.StartEngine();
+                    engine.modOverride = true;
                 }
             }
         }
