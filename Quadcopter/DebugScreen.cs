@@ -16,6 +16,11 @@ namespace Quadcopter
         private static double FRpower;
         private static double RLpower;
         private static double RRpower;
+        private static double pitch;
+        private static double roll;
+        private static double yaw;
+
+
         private static bool textureOK = true;
 
         public static void SetThrottles(float FL, float FR, float RL, float RR)
@@ -33,6 +38,13 @@ namespace Quadcopter
             DebugScreen.RLpower = RL / 320f;
             DebugScreen.RRpower = RR / 320f;
             textureOK = false;
+        }
+
+        public static void SetSetting(double pitch, double roll, double yaw)
+        {
+            DebugScreen.pitch = pitch;
+            DebugScreen.roll = roll;
+            DebugScreen.yaw = yaw;
         }
 
         private void OnGUI()
@@ -143,6 +155,9 @@ namespace Quadcopter
             GUILayout.BeginVertical();
             GUI.DragWindow(new Rect(0, 0, 10000, 20));
             GUILayout.Box(drawTexture);
+            GUILayout.Label("Pitch: " + pitch);
+            GUILayout.Label("Roll: " + roll);
+            GUILayout.Label("Yaw: " + yaw);
             GUILayout.EndVertical();
         }
 

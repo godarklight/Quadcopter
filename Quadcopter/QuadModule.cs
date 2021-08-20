@@ -14,10 +14,10 @@ namespace Quadcopter
         public void Setup(Vehicle vehicle, Part motorFL, Part motorFR, Part motorRL, Part motorRR)
         {
             this.vehicle = vehicle;
-            if (this.vehicle.Autotrim.autoTrimEnabled)
+            /*if (this.vehicle.Autotrim.autoTrimEnabled)
             {
                 this.vehicle.Autotrim.DisableAT();
-            }
+            }*/
             motors[0] = new QuadMotor(motorFL);
             motors[1] = new QuadMotor(motorFR);
             motors[2] = new QuadMotor(motorRL);
@@ -40,12 +40,12 @@ namespace Quadcopter
                 Destroy(this);
                 return;
             }
-            if (vehicle.Autotrim.autoTrimEnabled)
+            /*if (vehicle.Autotrim.autoTrimEnabled)
             {
                 QuadLog.Debug("Fixed update: Cannot use autotrim with quadcopters");
                 ScreenMessages.PostScreenMessage("Cannot use autotrim with quadcopters");
                 vehicle.Autotrim.DisableAT();
-            }
+            }*/
             acroPID.FixedUpdate(targetRot);
             acroPID.SetMotors(motors, InputSettings.Axis_Throttle.GetAxis());
         }
